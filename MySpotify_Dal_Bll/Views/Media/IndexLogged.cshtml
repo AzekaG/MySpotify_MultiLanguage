@@ -1,0 +1,283 @@
+﻿@using MySpotify.BLL.DTO
+@using MySpotify.Resourses
+@model MySpotify.Models.MediaUserGenreModel
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .mainMediaIndexBody {
+        background-image: url('/Media/giphy.gif');
+        margin-bottom: 20%;
+    }
+
+   
+
+</style>
+ @section Scripts{
+    <script>
+        btnPlayChangeStatus();
+        $(".media_selected").on("click", function (e) {
+            e.preventDefault();
+            let _player = $("#audioPlayer")[0];
+            btnPlayChangeStatus();
+          
+            let address = e.target.getAttribute("fileAddress");
+            _player.src = address;
+            _player.play();
+            let adressPoster = e.target.getAttribute("filePoster");
+            $("#mainMediaIndexBody").css("background-image", "url(" + adressPoster + ")");
+           // btnPlayChangeStatus();
+            $("#_artistName").text(e.target.getAttribute("fileArtist"));
+            $("#_songName").text(e.target.getAttribute("fileName"));
+        }); 
+
+        $(".popSongsItem").on("click", function (e) {
+            e.preventDefault();
+            let _player = $("#audioPlayer")[0]; 
+            let address = e.target.getAttribute("fileAddress");
+            _player.src = address;
+            _player.play();
+            btnPlayChangeStatus();
+           
+            let adressPoster = e.target.getAttribute("src");
+            $("#mainMediaIndexBody").css("background-image", "url(" + adressPoster + ")");
+            //btnPlayChangeStatus();
+            $("#_artistName").text(e.target.getAttribute("fileArtist"));
+            $("#_songName").text(e.target.getAttribute("fileName"));
+        });
+
+        $("#radioPlayer").on("click", function (e) {
+            
+            let _player = $("#audioPlayer")[0];
+            _player.src = 'https://cast.fex.net/djfm_x';
+            _player.play();
+            let adressPoster = "~\img\Radio.gif";
+            $("#mainMediaIndexBody").css("background-image", "url('/Media/giphy.gif')");
+            btnPlayChangeStatus();
+            $("#_artistName").text(e.target.getAttribute("fileArtist"));
+            $("#_songName").text(e.target.getAttribute("fileName"));
+        });
+
+        function btnPlayChangeStatus() {
+
+
+
+                if ($("#btn_Play").attr('status') === "true") {
+                    $("#btn_Play span").text("Play");
+                   
+                    $("#btn_Play").attr('status', 'false');
+                    let _player = $("#audioPlayer")[0];
+                    _player.pause();
+                }
+                else {
+                    $("#btn_Play span").text("Pause");
+                    $("#btn_Play").attr('status', 'true');
+                    let _player = $("#audioPlayer")[0];
+                    _player.play();
+
+                }
+
+            };
+       
+        
+
+        $("#btn_Play").on('click', function () {
+            btnPlayChangeStatus();
+        });
+        
+
+      
+
+
+        
+
+
+</script>
+}
+
+    <div class="header navbar navbar-expand-lg navbar-light bg-black">
+        <div class="header__section">
+            <div class="header__item headerlogo">
+                <a class="nav-item nav-link active" asp-action="Index" asp-controller="Media">
+                    <img src="~/img/spotify-logo.svg" style="max-width:100px;" />
+                </a>
+            </div>
+
+        </div>
+
+        <div class="header__section">
+        <div class="header__item headerlogo">
+            @using (Html.BeginForm("ChangeCulture", "Media"))
+            {
+                <select name="lang" class="form-control">
+
+                    <option value="uk">Українська</option>
+                    <option value="ru">Русский</option>
+                    <option value="en">English</option>
+                </select>
+                <input type="submit" name="submit" value="@Resource.ChooseLang" class="btn btn-primary" />
+
+            }
+        </div>
+            <div class="header__item headerlogo">
+         
+            <a class="nav-item nav-link" asp-action="Logout" asp-controller="User">@Resource.Logout</a>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="mainMediaIndexBody" id="mainMediaIndexBody">
+
+
+
+ <div class="headerIndex">
+     <div class="menu_side">
+            <h1>@Resource.Playlist</h1>
+         <div class="playlist">
+                <h4 class="active"><span></span><i class="bi bi-music-note-beamed"></i>@Resource.Playlist</h4>
+                <h4 class="noactive"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Create" asp-controller="Media">@Resource.Add_media</a></h4>
+                @if(Model.userDTO.Status == Status.admin)
+                {
+                    <h4 class="noactive"><i class="bi bi-gear"></i><a asp-action="Index" asp-controller="Admin">@Resource.Admin_page</a></h4>
+
+                }
+                else
+                {
+                    <h4 class="noactive"><i class="bi bi-gear"></i><a asp-action="MediaSettings" asp-controller="Media">@Resource.Media_management</a></h4>
+                }
+
+         </div>
+         <div class="menu_song">    
+                @foreach(var el in Model.mediaUserDTOs)
+                {
+                    
+                    <li class="songItem">
+
+                        <a type="text" asp-action="" class="media_selected" fileName="@(el.Name)" fileArtist="@(el.Artist)" fileAddress="@(el.FileAdress)" filePoster="@(el.Poster)" >
+                            @(el.Name)   @(el.Artist) 
+                        </a>
+                        <i class="bi playListPlay bi-play-circle-fill" id="1"></i>
+                        
+                    </li>
+                }
+             
+         </div>
+     </div>
+
+
+        <div class="song_side" id="song_sideId">
+        <nav>
+            <ul>
+                
+                    <li id="radioPlayer">
+                        @Resource.Radio
+                       </li>
+
+            </ul>
+                <div class="search">
+                    <i class="bi bi-search"></i>
+                    
+                </div>
+                <div class="user" >
+                    
+                </div>
+        </nav>
+        <div class="content">
+            <h1>@Resource.Punks_hoy__Rap_sucks_</h1>
+            <p id="_artistName"></p>
+            <br />
+                <p id="_songName"></p>
+                <div class="buttons">
+                    
+                </div>
+        </div>
+            <div class="recomended_Song">
+            <div class="h4">
+                <h4>@Resource.Recomended_Song</h4>
+                <div class="btn_s">
+                        <i id="left_scroll" class="bi bi-arrow-left-short"></i>
+                        <i id="right_scroll"  class="bi bi-arrow-right-short"></i>
+                </div>
+            </div>
+                <div class="item">
+                    @foreach (var el in Model.mediaDTOs) //вызвать метод контроллера , rоторый даст коллекцию всех загруженных песен всеми
+                    {    
+                        <li>
+                            <figure>
+                                <figcaption>@el.Artist</figcaption>
+                                <img src="@(el.Poster)" alt="Poster" title="Poster" class="popSongsItem" fileAddress="@(el.FileAdress)" />
+                                <figcaption>@el.Name</figcaption>
+                            </figure>
+                        </li>
+                       @*  <p>@el.Name</p>
+                        <p>@el.Artist</p> *@
+                    }
+
+                </div>
+        </div>
+            <div class="popular_songs">
+                <div class="h4">
+                    <h4>@Resource.Your_Songs</h4>
+                    <div class="btn_s">
+                        <i id="left_scrolls" class="bi bi-arrow-left-short"></i>
+                        <i id="right_scrolls" class="bi bi-arrow-right-short"></i>
+                    </div>
+                </div>
+
+                <div class="item">
+                    @foreach(var el in Model.mediaUserDTOs){
+                    <li>
+                        <figure>
+                            <figcaption>@el.Artist</figcaption>
+                            
+                        <img src="@(el.Poster)" alt="Poster" title="Poster" class="popSongsItem" fileAddress="@(el.FileAdress)"/>
+                            <figcaption>@el.Name</figcaption>
+                            </figure>
+                    </li>
+                       
+                        
+                    }
+                   
+                </div>
+
+            </div>
+
+    </div>
+
+
+        <div class="master_play" style="margin-bottom:100px">
+        <div class="wave">
+            <div class="wave1"></div>
+            <div class="wave1"></div>
+            <div class="wave1"></div>
+        </div>
+            <img src="/img/pngwing.com (2).png" />
+            <audio controls id="audioPlayer" type="audio" src="">
+                
+            </audio>
+            
+    </div>
+ </div>
+
+
+
+
+
+
+
+
+
+</div>
+ 
+
+
+
+
+
+
+
+
+

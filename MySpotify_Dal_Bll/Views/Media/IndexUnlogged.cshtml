@@ -1,0 +1,213 @@
+﻿@using MySpotify.BLL.DTO
+@using MySpotify.Resourses
+
+@model MySpotify.Models.MediaUserGenreModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section Scripts{
+    <script>
+        btnPlayChangeStatus();
+        $(".media_selected").on("click", function (e) {
+            e.preventDefault();
+            let _player = $("#audioPlayer")[0];
+
+            let address = e.target.getAttribute("fileAddress");
+            _player.src = address;
+            _player.play();
+            let adressPoster = e.target.getAttribute("filePoster");
+            $("#mainMediaIndexBody").css("background-image", "url(" + adressPoster + ")");
+            btnPlayChangeStatus();
+            $("#_artistName").text(e.target.getAttribute("fileArtist"));
+            $("#_songName").text(e.target.getAttribute("fileName"));
+        });
+        $(".popSongsItem").on("click", function (e) {
+            e.preventDefault();
+            let _player = $("#audioPlayer")[0];
+            let address = e.target.getAttribute("fileAddress");
+            _player.src = address;
+            _player.play();
+            let adressPoster = e.target.getAttribute("src");
+            $("#mainMediaIndexBody").css("background-image", "url(" + adressPoster + ")");
+            btnPlayChangeStatus();
+            $("#_artistName").text(e.target.getAttribute("fileArtist"));
+            $("#_songName").text(e.target.getAttribute("fileName"));
+        });
+
+        $("#radioPlayer").on("click", function (e) {
+
+            let _player = $("#audioPlayer")[0];
+            _player.src = 'https://cast.fex.net/djfm_x';
+            _player.play();
+            let adressPoster = "~\img\Radio.gif";
+            $("#mainMediaIndexBody").css("background-image", "url('/Media/giphy.gif')");
+            btnPlayChangeStatus();
+            $("#_artistName").text(e.target.getAttribute("fileArtist"));
+            $("#_songName").text(e.target.getAttribute("fileName"));
+        });
+
+        function btnPlayChangeStatus() {
+
+                if ($("#btn_Play").attr('status') === "true") {
+                    $("#btn_Play span").text("Play");
+                    $("#btn_Play").attr('status', 'false');
+                    let _player = $("#audioPlayer")[0];
+                    _player.pause();
+                }
+                else {
+                    $("#btn_Play span").text("Pause");
+                    $("#btn_Play").attr('status', 'true');
+                    let _player = $("#audioPlayer")[0];
+                    _player.play();
+
+                }
+        }
+
+        $("#btn_Play").on('click', function () {
+            btnPlayChangeStatus();
+        });
+
+</script>
+} 
+
+<style>
+    .song_side {
+       width: 100%;
+       margin-left: 20%;
+       margin-right: 20%;
+      
+    }
+
+    .recomended_Song{
+         margin-bottom: 20%;
+    }
+    .mainMediaIndexBody{
+        background-image: url('/Media/giphy.gif');
+        margin-bottom: 20%;
+    }
+
+</style>
+    <div class="header navbar navbar-expand-lg navbar-light bg-black">
+        <div class="header__section">
+            <div class="header__item headerlogo">
+                <a class="nav-item nav-link active" asp-action="Index" asp-controller="Media">
+                    <img src="~/img/spotify-logo.svg" style="max-width:100px;" />
+                </a>
+            </div>
+        </div>
+
+        <div class="header__section">
+        <div class="header__item headerlogo">
+            @using (Html.BeginForm("ChangeCulture", "Media"))
+            {
+                <select name="lang" class="form-control">
+
+                    <option value="uk">Українська</option>
+                    <option value="ru">Русский</option>
+                    <option value="en">English</option>
+                </select>
+                <input type="submit" name="submit" value="@Resource.ChooseLang" class="btn btn-primary" />
+
+            }
+        </div>
+            <div class="header__item headerlogo">
+          
+                <a class="nav-item nav-link active" asp-action="Login" asp-controller="User">@Resource.Login</a>
+            </div>
+            <div class="header__item headerlogo">
+            <a class="nav-item nav-link active" asp-action="Registration" asp-controller="User">@Resource.Registration</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+<div class="mainMediaIndexBody" id="mainMediaIndexBody">
+
+    <div class="headerIndex"  >
+     
+        <div class="song_side" id="song_sideId" >
+            <nav>
+                <ul>
+
+                    <li id="radioPlayer">
+                        @Resource.Radio
+                    </li>
+
+                </ul>
+                <div class="search">
+                    <i class="bi bi-search"></i>
+                  
+                </div>
+                <div class="user">
+                   
+                </div>
+            </nav>
+            <div class="content">
+                <h1>@Resource.Punks_hoy__Rap_sucks_</h1>
+                <h1>@Resource.For_full_use__please_log_in_to_your_account_</h1>
+                <p id="_artistName"></p>
+                <br />
+                <p id="_songName"></p>
+                <div class="buttons">
+                    <button id="btn_Play" status="true"><span id="btn_PlaySpan">@Resource.Play</span></button>
+                </div>
+            </div>
+            <div class="recomended_Song">
+                <div class="h4">
+                    <h4>@Resource.Recomended_Song</h4>
+                    <div class="btn_s">
+                        <i id="left_scroll" class="bi bi-arrow-left-short"></i>
+                        <i id="right_scroll" class="bi bi-arrow-right-short"></i>
+                    </div>
+                </div>
+                <div class="item">
+                    @foreach (var el in Model.mediaDTOs){
+                         <li>
+                            <img src="@(el.Poster)" alt="Poster" title="Poster" class="popSongsItem" fileAddress="@(el.FileAdress)" />
+                        </li>
+                    }
+
+                </div>
+            </div>
+            <div class="popular_songs">
+               
+                </div>
+
+                <div class="item">
+                   
+                </div>
+
+            </div>
+        <div class="master_play">
+            <div class="wave">
+                <div class="wave1"></div>
+                <div class="wave1"></div>
+                <div class="wave1"></div>
+            </div>
+            <img src="/img/pngwing.com (2).png" />
+            <audio controls id="audioPlayer" type="audio" src="">
+            </audio>
+
+        </div>
+        </div>
+ 
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

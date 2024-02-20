@@ -1,0 +1,20 @@
+﻿@model MySpotify.BLL.DTO.MediaDTO
+@using MySpotify.Resourses
+
+
+<div class="row">
+    <div>
+        <form asp-action="CreateMedia">
+            <h4>@Resource.Add_media</h4>
+            <hr />
+            <input asp-for="Name" type="hidden" name="Id" value="0"/>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">@Resource.Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>

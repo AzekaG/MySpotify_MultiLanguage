@@ -1,0 +1,22 @@
+﻿@model MySpotify.BLL.DTO.GenreDTO
+@using MySpotify.Resourses;
+
+
+
+
+<div class="row">
+    <div>
+        <form asp-action="EditGenre">
+            <h4>@Resource.Edit</h4>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">@Resource.Title</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>
+ 

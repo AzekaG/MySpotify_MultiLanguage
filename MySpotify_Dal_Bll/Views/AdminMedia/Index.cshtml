@@ -1,0 +1,239 @@
+﻿@model MySpotify.Models.AdminViewModels.IndexMediaModel
+@using MySpotify.Resourses
+
+
+
+@section Scripts {
+    <script>
+
+        $(".btnEdit").on("click", function (e) {
+            e.preventDefault();
+
+            $("<div id='dialogContent'></div>")
+                .addClass('dialog')
+                .appendTo('body')
+                .dialog({
+                    contentType: false,
+                    processData: false,
+                    title: $(this).attr("data-dialog-title"),
+                    close: function () { $('#dialogContent').remove() },
+                    modal: true,
+                    buttons: {
+                        '@Resource.Save': function () {
+                            $.ajax({
+                                url: "@Url.Action("EditMedia", "AdminMedia")",
+                                type: "POST",
+                                data: $('form').serialize(),
+                                datatype: 'json',
+                                success: function (result) {
+                                    location.reload();
+                                    $('#dialogContent').remove();
+                                }
+                            });
+                        }
+                    }
+                })
+                .load('https://localhost:7163/AdminMedia/EditMedia/' + this.getAttribute('genreid'));
+        });
+
+
+        $(".btnDelete").on("click", function (e) {
+            e.preventDefault();
+
+            $("<div id='dialogContent'></div>")
+                .addClass('dialog')
+                .appendTo('body')
+                .dialog({
+                    contentType: false,
+                    processData: false,
+                    title: $(this).attr("data-dialog-title"),
+                    close: function () { $('dialogContent').remove() },
+                    modal: true,
+                    buttons: {
+                        '@Resource.Delete': function () {
+                            $.ajax({
+                                url: "@Url.Action("DeleteMedia", "AdminMedia")",
+                                type: "POST",
+                                data: $('form').serialize(),
+                                datatype: 'json',
+                                success: function (result) {
+                                    location.reload();
+                                    $('#dialogContent').remove();
+                                }
+                            });
+
+                        },
+                        '@Resource.Cancel': function () {
+                            alert("remove");
+
+                            $(this).dialog("close");
+                        }
+                    }
+                })
+                .load('https://localhost:7163/AdminMedia/DeleteMedia/' + this.getAttribute('genreid'));
+        });
+
+        $(".btnCreate").on('click', function (e) {
+            e.preventDefault();
+
+            $("<div id='dialogContent'></div>")
+                .addClass('dialog')
+                .appendTo('body')
+                .load('https://localhost:7163/AdminMedia/CreateMedia')
+                .dialog({
+                    title: $(this).attr("data-dialog-title"),
+                    close: function () { $(this).remove() },
+                    modal: true,
+                    buttons: {
+                        '@Resource.Create': function () {
+                            $.ajax({
+                                url: "@Url.Action("CreateMedia", "AdminMedia")",
+                                type: "POST",
+                                data: $('form').serialize(),
+                                datatype: 'json',
+                                success: function (result) {
+                                    location.reload();
+                                    $("#dialogContent").remove();
+                                }
+                            });
+
+                        }
+
+                    }
+                });
+
+
+        });
+
+
+
+
+
+        var animateButton = function (e) {
+
+            //e.preventDefault;
+            //reset animation
+            e.target.classList.remove('animate');
+
+            e.target.classList.add('animate');
+            setTimeout(function () {
+                e.target.classList.remove('animate');
+            }, 3000);
+        };
+
+        var bubblyButtons = document.getElementsByClassName("bubbly-button");
+
+        for (var i = 0; i < bubblyButtons.length; i++) {
+            bubblyButtons[i].addEventListener('click', animateButton, false);
+        }
+    </script>
+}
+
+
+<style>
+
+    html {
+        overflow: auto;
+    }
+
+    body {
+    }
+
+    .mainAdmin {
+        z-index: 0;
+    }
+
+    .ui-dialog {
+        opacity: 100%;
+        background-color: gray;
+        z-index: 0;
+    }
+
+    .mainMediaIndexBody {
+        margin-bottom: 20%;
+    }
+
+</style>
+
+<video autoplay muted loop id="myVideo">
+    <source src="https://www.shutterstock.com/shutterstock/videos/1109683655/preview/stock-footage-retro-futuristic-s-style-drive-in-neon-city-seamless-loop-of-cyberpunk-sunset-landscape-with-a.webm" type="video/mp4">
+</video>
+
+<div class="mainAdmin">
+    <div class="header navbar navbar-expand-lg navbar-light bg-black">
+        <div class="header__section">
+            <div class="header__item headerlogo">
+                <a class="nav-item nav-link active" asp-action="Index" asp-controller="Media">
+                    <img src="~/img/spotify-logo.svg" style="max-width:100px;" />
+
+                </a>
+            </div>
+
+        </div>
+
+        <div class="header__section">
+            <div class="header__item headerlogo">
+                @using (Html.BeginForm("ChangeCulture", "Media"))
+                {
+                    <select name="lang" class="form-control">
+
+                        <option value="uk">Українська</option>
+                        <option value="ru">Русский</option>
+                        <option value="en">English</option>
+                    </select>
+                    <input type="submit" name="submit" value="@Resource.ChooseLang" class="btn btn-primary" />
+
+                }
+            </div>
+            <div class="header__item headerlogo">
+              
+                <a class="nav-item nav-link active" asp-action="Logout" asp-controller="Users">@Resource.Logout</a>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="headerIndex adminHeaderIndex">
+        <div class="menu_side">
+            <h1>Playlist</h1>
+            <div class="playlist">
+                <h4 class="noactive" id="GenreManagment"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Index" asp-controller="Admin" id="btnAddManagment">@Resource.Genre_management</a></h4>
+                <h4 class="active" id="AddManagment"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Index" asp-controller="AdminMedia" class="btnAddManagment">@Resource.Media_management</a></h4>
+                <h4 class="noactive" id="AccManagment"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Index" asp-controller="AdminAcc" class="btnAccManagment">@Resource.Account_management</a></h4>
+                <h4 class="active"><span></span><i class="bi bi-house"></i><a asp-action="Index" asp-controller="Media">@Resource.Home</a></h4>
+
+            </div>
+        </div>
+
+
+        <div class="song_side" id="song_sideId">
+
+            <div class="adminContent">
+                <ul class='adminGenreContentUl'>
+
+                    @foreach (var el in Model.MediaList)
+                    {
+                        <li>
+                            <div style='border:2px solid red; border-radius:10px; width:180px; margin-left: 80px'>
+                                <span > @(el.Name)    @(el.Artist) </span>
+                            </div>
+                            <img src='@el.Poster' style='width:120px' />
+                            <button asp-action='Edit' asp-route-id='@el.Id' class='btnEdit bubbly-button ' data-dialog-title='@Resource.Edit' genreid='@el.Id'>
+                                <span class='text'>@Resource.Edit</span>
+                            </button>
+                            <button asp-action='Delete' asp-route-id='@el.Id' class='btnDelete bubbly-button ' data-dialog-title='@Resource.Delete' genreid='@el.Id'>
+
+                                <span class='text'>@Resource.Delete</span>
+                            </button>
+                        </li>
+
+                    }
+                </ul>
+                <button class='btnCreate bubbly-button' asp-action='CreateMedia' data-dialog-title='@Resource.Create'><span class='text'>@Resource.Create</span></button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
