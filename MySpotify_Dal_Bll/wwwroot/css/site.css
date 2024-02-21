@@ -797,23 +797,23 @@ color: #f1f1f1;
                     }
 
     .headerIndex .song_side .recomended_Song {
-        width: 90%;
-        height: auto;
+        width: 200px;
+        height: 200px;
         margin: auto;
         margin-bottom: 100px;
         margin-top: 0px;
     }
     .headerIndex .song_side .recomended_Song .item li img {
-            width: auto;
-            max-height: 100px;
+           
+            height: 100px;
             width: 100px;
             border-radius: 50%;
             position: relative;
             display: block;
         }
     .headerIndex .song_side .popular_songs .item li img {
-        width: auto;
-        max-height: 100px;
+       
+        height: 100px;
         width: 100px;
         border-radius: 50%;
         position: relative;
@@ -842,8 +842,8 @@ color: #f1f1f1;
                 }
 
     .headerIndex .song_side .popular_songs {
-        width: 90%;
-        height: auto;
+        width: 200px;
+        height: 200px;
         margin: auto;
         margin-bottom: 0px;
         margin-top: 0px;
@@ -890,8 +890,8 @@ color: #f1f1f1;
             overflow-x: auto;
             overflow-y: hidden;
             scroll-behavior: smooth; /*плавная прокрутка*/
-            text-align: center;
-            align-items: center;
+           
+
         }
   
             .headerIndex .song_side .popular_songs .item::-webkit-scrollbar {
@@ -900,7 +900,7 @@ color: #f1f1f1;
 
     .headerIndex .song_side .popular_songs .item li {
                 list-style-type: none;
-                position: center;
+               
                 min-width: 100px;
                 max-height: 150px;
                 background-color: transparent;
@@ -909,8 +909,8 @@ color: #f1f1f1;
                
     }
     .headerIndex .song_side .recomended_Song .item li {
+        margin-top: 0px;
         list-style-type: none;
-        position: center;
         min-width: 80px;
         height: 80px;
         margin-right: 20px;
@@ -964,7 +964,7 @@ figure + figcaption {
             overflow-x: auto;
             scroll-behavior: smooth; /*плавная прокрутка*/
             text-align: center;
-            align-items: center;
+           
         }
 
             .headerIndex .song_side .recomended_Song .item::-webkit-scrollbar {

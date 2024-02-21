@@ -25,24 +25,59 @@ namespace MySpotify.Controllers
 
 
         // GET: MediaControlelr
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(SortState sortState = SortState.NameAsc , int page = 1)
         {
+            IEnumerable<MediaDTO>? medusDTO; //коллекция медиа 
+            UserDTO? user = null;  //сессионый юзер
+            int idUser; //айди сессионного юзерра если есть
+
+            int pageCount; //количество елементов в коллекции
+            int pageSize = 5; //количество елементов на странице
+
+
+            int.TryParse(HttpContext.Session.GetString("Id"), out idUser);
+
+
+            ViewBag.NameSort = sortState == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            ViewBag.ArtistSort = sortState == SortState.ArtistAsc ? SortState.ArtistDesc : SortState.ArtistAsc;
+
+            
+            if (idUser > 0)
+            {
+               user = await _userService.GetUser(idUser);
+               medusDTO = (await _mediaService.GetMediaList()).Where(x => x.UserId == user.Id);
+               
+            }
+            else
+            {
+                medusDTO = await _mediaService.GetMediaList();
+            }
+
+            pageCount = medusDTO.Count();
+            medusDTO = sortState switch
+            {
+                SortState.NameDesc => medusDTO.OrderByDescending(x => x.Name).Skip((page-1)*pageSize).Take(pageSize),
+                SortState.NameAsc => medusDTO.OrderBy(x => x.Name).Skip((page - 1) * pageSize).Take(pageSize),
+                SortState.ArtistAsc => medusDTO.OrderBy(x => x.Artist).Skip((page - 1) * pageSize).Take(pageSize),
+                SortState.ArtistDesc => medusDTO.OrderByDescending(x => x.Artist).Skip((page - 1) * pageSize).Take(pageSize),
+                _ => medusDTO.OrderBy(x => x.Name)
+
+            };
+
+
+            var modelRes = new MediaUserGenreModel()
+            {
+                mediaDTOs = medusDTO,
+                userDTO = user,
+                mediaPaginationModel = new MediaPaginationModel(pageCount, page, pageSize)
+            };
+
             HttpContext.Session.SetString("path", Request.Path);
             if(!isLogged())
             {
-                return View("IndexUnlogged", new MediaUserGenreModel
-                {
-                    mediaDTOs = await _mediaService.GetMediaList(),
-                    userDTO = null
-                });
+                return View("IndexUnlogged", modelRes);
             }
-            var user = await _userService.GetUser(int.Parse(HttpContext.Session.GetString("Id")));
-            return View("IndexLogged", new MediaUserGenreModel
-            {
-                mediaDTOs = await _mediaService.GetMediaList(),
-                userDTO = user,
-                mediaUserDTOs = (await _mediaService.GetMediaList()).Where(x=>x.UserId == user.Id )
-            });
+            return View("IndexLogged", modelRes);
         }
 
 

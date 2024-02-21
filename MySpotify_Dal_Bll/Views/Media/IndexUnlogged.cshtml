@@ -152,14 +152,12 @@
                 <h1>@Resource.For_full_use__please_log_in_to_your_account_</h1>
                 <p id="_artistName"></p>
                 <br />
-                <p id="_songName"></p>
-                <div class="buttons">
-                    <button id="btn_Play" status="true"><span id="btn_PlaySpan">@Resource.Play</span></button>
-                </div>
             </div>
             <div class="recomended_Song">
                 <div class="h4">
                     <h4>@Resource.Recomended_Song</h4>
+                    <a asp-action="Index" asp-route-sortState="@ViewBag.NameSort">По имени</a>
+                    <a asp-action="Index" asp-route-sortState="@ViewBag.ArtistSort">По артисту</a>
                     <div class="btn_s">
                         <i id="left_scroll" class="bi bi-arrow-left-short"></i>
                         <i id="right_scroll" class="bi bi-arrow-right-short"></i>
@@ -167,12 +165,54 @@
                 </div>
                 <div class="item">
                     @foreach (var el in Model.mediaDTOs){
-                         <li>
-                            <img src="@(el.Poster)" alt="Poster" title="Poster" class="popSongsItem" fileAddress="@(el.FileAdress)" />
+                        <li>
+                            <span title="@el.Name">
+                                @if((el.Name).Length > 7)
+                                {
+                                    var str = el.Name.Substring(0, 6) + "...";
+                                    @str;
+
+                                }
+                                else {
+                                   @el.Name;
+                                }
+                                </span >
+                        <img src="@(el.Poster)" alt="Poster" title="Poster" class="popSongsItem" fileAddress="@(el.FileAdress)" />
+                            <span title="@el.Artist">
+                                @if((el.Artist).Length > 7)
+                                {
+                                    var strk = el.Artist.Substring(0, 6) + "...";
+                                    @strk;
+                                 }
+                                else
+                                {
+                                    @el.Artist
+                                    
+                                }
+
+                                </span>
                         </li>
                     }
+                   
+
 
                 </div>
+                <p>
+                    @if(Model.mediaPaginationModel.HasPreviousPage)
+                    {
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.mediaPaginationModel.PageNumber - 1)" class="glyphicon glyphicon-chevron-left">
+                            Назад
+                        </a>
+                    }
+                    @if(Model.mediaPaginationModel.HasNextPage)
+                    {
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.mediaPaginationModel.PageNumber + 1)" class="glyphicon glyphicon-chevron-right">
+                            Вперед
+                        </a>
+                    }
+                </p>
             </div>
             <div class="popular_songs">
                

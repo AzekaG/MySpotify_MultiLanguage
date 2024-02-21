@@ -137,7 +137,7 @@
      <div class="menu_side">
             <h1>@Resource.Playlist</h1>
          <div class="playlist">
-                <h4 class="active"><span></span><i class="bi bi-music-note-beamed"></i>@Resource.Playlist</h4>
+                <h4 class="active"><span></span><i class="bi bi-music-note-beamed"></i>@Resource.Playlist</h4>s
                 <h4 class="noactive"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Create" asp-controller="Media">@Resource.Add_media</a></h4>
                 @if(Model.userDTO.Status == Status.admin)
                 {
@@ -151,7 +151,7 @@
 
          </div>
          <div class="menu_song">    
-                @foreach(var el in Model.mediaUserDTOs)
+                @foreach(var el in Model.mediaDTOs)
                 {
                     
                     <li class="songItem">
@@ -212,8 +212,7 @@
                                 <figcaption>@el.Name</figcaption>
                             </figure>
                         </li>
-                       @*  <p>@el.Name</p>
-                        <p>@el.Artist</p> *@
+                       
                     }
 
                 </div>
@@ -228,7 +227,7 @@
                 </div>
 
                 <div class="item">
-                    @foreach(var el in Model.mediaUserDTOs){
+                    @foreach(var el in Model.mediaDTOs){
                     <li>
                         <figure>
                             <figcaption>@el.Artist</figcaption>
