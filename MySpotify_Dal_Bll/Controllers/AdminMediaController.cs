@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MySpotify.BLL.DTO;
 using MySpotify.BLL.Interfaces;
-using MySpotify.Filters;
 using MySpotify.Models;
 using MySpotify.Models.AdminViewModels;
 
 namespace MySpotify.Controllers
 {
-	[Culture]
-	public class AdminMediaController : Controller
+    public class AdminMediaController : Controller
     {
 
         readonly IMediaService _mediaService;
@@ -26,7 +24,6 @@ namespace MySpotify.Controllers
         // GET: AdminController
         public async Task<ActionResult> Index()
         {
-            HttpContext.Session.SetString("path", Request.Path);
             IndexMediaModel indexModel = new IndexMediaModel()
             {
                 MediaList = await _mediaService.GetMediaList(),
@@ -38,7 +35,6 @@ namespace MySpotify.Controllers
         // GET: AdminController/Edit/5
         public async Task<IActionResult> EditMedia(int? id)
         {
-            HttpContext.Session.SetString("path", Request.Path);
             if (id == null)
             {
                 return NotFound();
@@ -62,7 +58,7 @@ namespace MySpotify.Controllers
         
         public async Task<ActionResult> EditMedia(AdminMediaEditModel media , string genreId)
          {
-            HttpContext.Session.SetString("path", Request.Path);
+
             media.mediaDTO.Genre = genreId;
            
             if (ModelState.IsValid)
@@ -85,7 +81,6 @@ namespace MySpotify.Controllers
 
         public async Task<IActionResult> DeleteMedia(int? id)
         {
-            HttpContext.Session.SetString("path", Request.Path);
             if (id == null)
             {
                 return NotFound();
@@ -103,7 +98,7 @@ namespace MySpotify.Controllers
         public async Task<IActionResult> DeleteMedia(int id, MediaDTO media)
         {
 
-            HttpContext.Session.SetString("path", Request.Path);
+
             if (id != media.Id)
             {
                 return NotFound();

@@ -1,15 +1,13 @@
-﻿
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MySpotify.BLL.DTO;
 using MySpotify.BLL.Interfaces;
-
-using MySpotify.Filters;
+using MySpotify.DAL.Entities;
 using MySpotify.Models.AdminViewModels;
 
 namespace MySpotify.Controllers
 {
-	[Culture]
     public class AdminAccController : Controller
     {
         IUserService _userService;
@@ -18,9 +16,8 @@ namespace MySpotify.Controllers
         // GET: AdminAccController
         public async Task<ActionResult> Index()
         {
-			HttpContext.Session.SetString("path", Request.Path);
 
-			AdminAccIndexModel model = new AdminAccIndexModel() 
+            AdminAccIndexModel model = new AdminAccIndexModel() 
             {
             _users = await _userService.GetUserList()
              };
@@ -31,13 +28,12 @@ namespace MySpotify.Controllers
 
 		public async Task<IActionResult> EditUser(int? id)
 		{
-			HttpContext.Session.SetString("path", Request.Path);
 			if (id == null)
 			{
 				return NotFound();
 			}
 
-			var user = await _userService.GetUser((int)id);
+			var user = await _userService.GetUser((int)id); //us with salt
 			if (user == null)
 			{
 				return NotFound();
@@ -51,7 +47,6 @@ namespace MySpotify.Controllers
 
 		public async Task<IActionResult> EditUser(int id, UserDTO user)
 		{
-			HttpContext.Session.SetString("path", Request.Path);
 			if (id != user.Id)
 			{
 				return NotFound();
@@ -75,7 +70,6 @@ namespace MySpotify.Controllers
 
 		public async Task<ActionResult> DeleteUser(int? id)
 		{
-			HttpContext.Session.SetString("path", Request.Path);
 			if (id == null)
 			{
 				return NotFound();
@@ -93,7 +87,7 @@ namespace MySpotify.Controllers
 		[HttpPost]
 		public async Task<IActionResult> DeleteUser(int id, UserDTO user)
 		{
-			HttpContext.Session.SetString("path", Request.Path);
+
 
 			if (id != user.Id)
 			{

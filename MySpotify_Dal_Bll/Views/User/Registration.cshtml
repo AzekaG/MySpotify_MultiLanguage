@@ -1,5 +1,5 @@
 ﻿@model MySpotify.Models.RegistrationModel
-@using MySpotify.Resourses
+
 
 <div class="header navbar navbar-expand-lg navbar-light bg-black">
 	<div class="header__section">
@@ -13,10 +13,10 @@
 
 	<div class="header__section">
 		<div class="header__item headerlogo">
-			<a class="nav-item nav-link active" asp-action="Login" asp-controller="User">@Resource.Login</a>
+			<a class="nav-item nav-link active" asp-action="Login" asp-controller="User">Войти</a>
 		</div>
 		<div class="header__item headerlogo">
-			<a class="nav-item nav-link disabled" asp-action="Registration" asp-controller="User">@Resource.Registration</a>
+			<a class="nav-item nav-link disabled" asp-action="Registration" asp-controller="User">Регистрация</a>
 		</div>
 	</div>
 </div>
@@ -27,11 +27,11 @@
 		<div class="form-value">
 			<form asp-action="Registration">
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-				<h2>@Resource.Registration</h2>
+				<h2>Регистрация</h2>
 				<div class="inputbox form-group">
 					<ion-icon name="accessibility-outline"></ion-icon>
 					<input asp-for="FirstName"  required />
-					<label asp-for="FirstName" class="control-label">@Resource.Name</label>
+					<label asp-for="FirstName" class="control-label">Имя</label>
 					<span asp-validation-for="FirstName" class="text-danger"></span>
 				</div>
 
@@ -39,21 +39,21 @@
 				<div class="inputbox form-group">
 					<ion-icon name="accessibility-outline"></ion-icon>
 					<input asp-for="LastName" required />
-					<label asp-for="LastName" class="control-label">@Resource.Second_Name</label>
+					<label asp-for="LastName" class="control-label">Фамилия</label>
 					<span asp-validation-for="LastName" class="text-danger"></span>
 				</div>
 
 				<div class="inputbox form-group">
 					<ion-icon name="mail-outline"></ion-icon>
 					<input asp-for="Email"  required />
-					<label asp-for="Email" class="control-label">@Resource.Email</label>
+					<label asp-for="Email" class="control-label">Почтовый ящик</label>
 					<span asp-validation-for="Email" class="text-danger"></span>
 				</div>
 
 				<div class="inputbox form-group">
 					<ion-icon name="lock-closed-outline"></ion-icon>
 					<input asp-for="Password"  required type="password" />
-					<label >@Resource.Password</label>
+					<label asp-for="Password" class="control-label"></label>
 					<span asp-validation-for="Password" class="text-danger"></span>
 				</div>
 				<div class="inputbox form-group">

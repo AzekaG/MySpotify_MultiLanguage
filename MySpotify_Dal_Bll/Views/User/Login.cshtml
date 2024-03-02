@@ -1,5 +1,4 @@
 ﻿@model MySpotify.Models.LoginModel
-@using MySpotify.Resourses
 @{
 
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,10 +22,10 @@
    
     <div class="header__section">
         <div class="header__item headerlogo">
-            <a class="nav-item nav-link disabled" asp-action="Login" asp-controller="User">@Resource.Login</a>
+            <a class="nav-item nav-link disabled" asp-action="Login" asp-controller="User">Войти</a>
         </div>
         <div class="header__item headerlogo">
-            <a class="nav-item nav-link active" asp-action="Registration" asp-controller="User">@Resource.Registration</a>
+            <a class="nav-item nav-link active" asp-action="Registration" asp-controller="User">Регистрация</a>
         </div>
     </div>
 </div>
@@ -42,14 +41,14 @@
                 <div class="inputbox form-group">
                     <ion-icon name="mail-outline"></ion-icon>
                     <input type="email" autocomplete="off" asp-for="Email" required readonly onfocus="this.removeAttribute('readonly')" />
-                    <label asp-for="Email">@Resource.Email</label>
+                    <label asp-for="Email">Почтовый ящик</label>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
                 <div class="inputbox form-group">
                     <ion-icon name="lock-closed-outline"></ion-icon>
                     <input autocomplete="off" asp-for="Password" required type="password" readonly onfocus="this.removeAttribute('readonly')" />
-                    <label>@Resource.Password</label>
+                    <label asp-for="Password"></label>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
 
@@ -59,8 +58,8 @@
                 </div>
                 <div class="Register">
                     <p>
-                        @Resource.Has_no_account_
-                        <a class="nav-item nav-link active" asp-action="Registration" asp-controller="Users">@Resource.Registration</a>
+                        Нет аккаунта?
+                        <a class="nav-item nav-link active" asp-action="Registration" asp-controller="Users">Регистрация</a>
                     </p>
                 </div>
 

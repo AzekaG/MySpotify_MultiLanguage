@@ -1,5 +1,4 @@
 ﻿@model MySpotify.Models.MediaDownloadModel
-@using MySpotify.Resourses
 
 <div class="header navbar navbar-expand-lg navbar-light bg-black">
 	<div class="header__section">
@@ -13,20 +12,7 @@
 
 	<div class="header__section">
 		<div class="header__item headerlogo">
-			@using (Html.BeginForm("ChangeCulture", "Media"))
-			{
-				<select name="lang" class="form-control">
-
-					<option value="uk">Українська</option>
-					<option value="ru">Русский</option>
-					<option value="en">English</option>
-				</select>
-				<input type="submit" name="submit" value="@Resource.ChooseLang" class="btn btn-primary" />
-
-			}
-		</div>
-		<div class="header__item headerlogo">
-			<a class="nav-item nav-link active" asp-action="Logout" asp-controller="User">@Resource.Logout</a>
+			<a class="nav-item nav-link active" asp-action="Logout" asp-controller="User">Выйти</a>
 		</div>
 	</div>
 </div>
@@ -37,12 +23,12 @@
 		<div class="form-value">
 			<form asp-action="Create" enctype="multipart/form-data">
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-				<h2>@Resource.Add_media</h2>
+				<h2>Добавить медиа</h2>
 				
 				<div class="inputbox form-group">
 					<ion-icon name="musical-note-outline"></ion-icon>
 					<input asp-for="@Model.MediaDTO!.Name"  required />
-					<label asp-for="@Model.MediaDTO!.Name">@Resource.Title</label>
+					<label asp-for="@Model.MediaDTO!.Name" >Название</label>
 					<span asp-validation-for="@Model.MediaDTO!.Name" class="text-danger"></span>
 				</div>
 
@@ -50,31 +36,31 @@
 				<div class="inputbox form-group">
 					<ion-icon name="musical-note-outline"></ion-icon>
 					<input asp-for="@Model.MediaDTO!.Artist" required />
-					<label>@Resource.Singer</label>
+					<label asp-for="@Model.MediaDTO!.Artist" class="control-label">Исполнитель</label>
 					<span asp-validation-for="@Model.MediaDTO!.Artist" class="text-danger"></span>
 				</div>
 
 				<div class="inputbox">
-					@Resource.Mediafile
+					Медиафайл
 					<ion-icon name="musical-note-outline"></ion-icon>
 					<input asp-for="MediaDTO.FileAdress" name="upMedia" type="file" required accept=".mp3" />
 					
 				</div>
 
 				<div class="inputbox">
-					@Resource.Poster
+					Постер
 					<ion-icon name="musical-note-outline"></ion-icon>
 					<input asp-for="MediaDTO.Poster" name="upPoster" type="file" required accept=".jpg, .jpeg, .png" />
 					
 				</div>
 				<div class="form-group inputbox">
-					@Resource.Genre
+					Жанр
 					<select asp-for="@Model.MediaDTO.Genre" name="genre" class="form-control" asp-items="@(new SelectList(Model.Genres , "Id" ,"Name"))"></select>
 					<span asp-validation-for="@Model.MediaDTO.Genre" class="text-danger"></span>
 				</div>
 			
 				<div class="form-group">
-					<input type="submit" value="@Resource.Add" class="btn btn-primary" id="btn_Enter" style="color:black;" />
+					<input type="submit" value="Добавить" class="btn btn-primary" id="btn_Enter" style="color:black;" />
 				</div>
 				
 			</form>

@@ -1,6 +1,4 @@
 ﻿@using MySpotify.BLL.DTO
-@using MySpotify.Resourses
-
 @model MySpotify.Models.MediaUserGenreModel
 
 @{
@@ -99,25 +97,11 @@
         </div>
 
         <div class="header__section">
-        <div class="header__item headerlogo">
-            @using (Html.BeginForm("ChangeCulture", "Media"))
-            {
-                <select name="lang" class="form-control">
-
-                    <option value="uk">Українська</option>
-                    <option value="ru">Русский</option>
-                    <option value="en">English</option>
-                </select>
-                <input type="submit" name="submit" value="@Resource.ChooseLang" class="btn btn-primary" />
-
-            }
-        </div>
             <div class="header__item headerlogo">
-          
-                <a class="nav-item nav-link active" asp-action="Login" asp-controller="User">@Resource.Login</a>
+                <a class="nav-item nav-link active" asp-action="Login" asp-controller="User">Войти</a>
             </div>
             <div class="header__item headerlogo">
-            <a class="nav-item nav-link active" asp-action="Registration" asp-controller="User">@Resource.Registration</a>
+                <a class="nav-item nav-link active" asp-action="Registration" asp-controller="User">Регистрация</a>
             </div>
         </div>
     </div>
@@ -135,29 +119,31 @@
                 <ul>
 
                     <li id="radioPlayer">
-                        @Resource.Radio
+                        Radio
                     </li>
 
                 </ul>
                 <div class="search">
                     <i class="bi bi-search"></i>
-                  
+                    <input type="text" placeholder="Найти музыку..." />
                 </div>
                 <div class="user">
                    
                 </div>
             </nav>
             <div class="content">
-                <h1>@Resource.Punks_hoy__Rap_sucks_</h1>
-                <h1>@Resource.For_full_use__please_log_in_to_your_account_</h1>
+                <h1>Punks hoy! Rap sucks!</h1>
+                <h1>Для полноценного использование войдите в аккаунт</h1>
                 <p id="_artistName"></p>
                 <br />
+                <p id="_songName"></p>
+                <div class="buttons">
+                    <button id="btn_Play" status="true"><span id="btn_PlaySpan">Play</span></button>
+                </div>
             </div>
             <div class="recomended_Song">
                 <div class="h4">
-                    <h4>@Resource.Recomended_Song</h4>
-                    <a asp-action="Index" asp-route-sortState="@ViewBag.NameSort">По имени</a>
-                    <a asp-action="Index" asp-route-sortState="@ViewBag.ArtistSort">По артисту</a>
+                    <h4>Recomended_Song</h4>
                     <div class="btn_s">
                         <i id="left_scroll" class="bi bi-arrow-left-short"></i>
                         <i id="right_scroll" class="bi bi-arrow-right-short"></i>
@@ -165,54 +151,12 @@
                 </div>
                 <div class="item">
                     @foreach (var el in Model.mediaDTOs){
-                        <li>
-                            <span title="@el.Name">
-                                @if((el.Name).Length > 7)
-                                {
-                                    var str = el.Name.Substring(0, 6) + "...";
-                                    @str;
-
-                                }
-                                else {
-                                   @el.Name;
-                                }
-                                </span >
-                        <img src="@(el.Poster)" alt="Poster" title="Poster" class="popSongsItem" fileAddress="@(el.FileAdress)" />
-                            <span title="@el.Artist">
-                                @if((el.Artist).Length > 7)
-                                {
-                                    var strk = el.Artist.Substring(0, 6) + "...";
-                                    @strk;
-                                 }
-                                else
-                                {
-                                    @el.Artist
-                                    
-                                }
-
-                                </span>
+                         <li>
+                            <img src="@(el.Poster)" alt="Poster" title="Poster" class="popSongsItem" fileAddress="@(el.FileAdress)" />
                         </li>
                     }
-                   
-
 
                 </div>
-                <p>
-                    @if(Model.mediaPaginationModel.HasPreviousPage)
-                    {
-                        <a asp-action="Index"
-                           asp-route-page="@(Model.mediaPaginationModel.PageNumber - 1)" class="glyphicon glyphicon-chevron-left">
-                            Назад
-                        </a>
-                    }
-                    @if(Model.mediaPaginationModel.HasNextPage)
-                    {
-                        <a asp-action="Index"
-                           asp-route-page="@(Model.mediaPaginationModel.PageNumber + 1)" class="glyphicon glyphicon-chevron-right">
-                            Вперед
-                        </a>
-                    }
-                </p>
             </div>
             <div class="popular_songs">
                

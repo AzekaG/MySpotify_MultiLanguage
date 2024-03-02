@@ -1,16 +1,13 @@
 ﻿@using MySpotify.BLL.DTO
 @model MySpotify.BLL.DTO.UserDTO
 
-
-
-
 <div class="form-value">
 	<form asp-action="Edit">
 		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 		<h2>Status @Model.Active</h2>
 		<input type="hidden" asp-for="Id" />
 		<input type="hidden" asp-for="Password" />
-		
+		<input type="hidden" asp-for="Salt" />
 
 		<div class=" form-group">
 			<ion-icon name="accessibility-outline"></ion-icon>

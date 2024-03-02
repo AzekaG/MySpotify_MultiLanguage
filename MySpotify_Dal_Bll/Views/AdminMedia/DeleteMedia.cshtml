@@ -1,15 +1,15 @@
 ﻿@model MySpotify.BLL.DTO.MediaDTO
-@using MySpotify.Resourses
+
 
 <div class="row">
     <div>
         <form asp-action="DeleteMedia">
-            <h4>@Resource.Delete</h4>
+            <h4>Удаление</h4>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div>
-                <h5>@Resource.Do_you_really_want_to_delete_this_meida_</h5>
+                <h5>Вы действительно хотите удалить этот медиафайл? </h5>
             </div>
         </form>
     </div>

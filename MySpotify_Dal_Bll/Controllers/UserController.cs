@@ -1,33 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using MySpotify.BLL.DTO;
 using MySpotify.BLL.Interfaces;
-using MySpotify.Filters;
+using MySpotify.DAL.Entities;
 using MySpotify.Models;
 using System.Security.Cryptography;
 using System.Text;
+using Status = MySpotify.BLL.DTO.Status;
 
 
 
 
 namespace MySpotify.Controllers
 {
-	[Culture]
-	public class UserController : Controller
+    public class UserController : Controller
     {
         
         readonly IUserService _userService;
         readonly IGenreService _genreService;
         readonly IMediaService _mediaService;
-        public UserController(IUserService userService, IGenreService genreService, IMediaService mediaService)
+        IHubContext<NotificationHub> _hubContext { get; }
+        public UserController(IUserService userService, IGenreService genreService, IMediaService mediaService , IHubContext<NotificationHub> hubt)
         {
             _userService = userService;
             _genreService = genreService;
             _mediaService = mediaService;
+            _hubContext = hubt;
         }
 
         public ActionResult Login()
         {
-            HttpContext.Session.SetString("path", Request.Path);
             return View();
         }
 
@@ -35,7 +37,6 @@ namespace MySpotify.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel logon)
         {
-            HttpContext.Session.SetString("path", Request.Path);
             if (ModelState.IsValid)
             {
                 if ((await _userService.GetUserList()).Count() == 0)
@@ -72,27 +73,29 @@ namespace MySpotify.Controllers
             return View(logon);
         }
 
-        public ActionResult Logout()
-        {
-            HttpContext.Session.SetString("path", Request.Path);
+        public async Task<ActionResult> Logout()
+        {   var name = HttpContext.Session.GetString("FirstName");
+            await SendMessage(name + " вышел из портала");
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Media");
         }
 
 
+        async Task SendMessage(string message)
+        {
+            await _hubContext.Clients.All.SendAsync("displayMessage", message);
+        }
 
 
         public IActionResult Registration()
         {
-            HttpContext.Session.SetString("path", Request.Path);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Registration(RegistrationModel user)
+        public async Task<IActionResult> Registration(RegistrationModel user)
         {
-            HttpContext.Session.SetString("path", Request.Path);
             UserDTO userDTO = new UserDTO()
             {
                 Id = 0,
@@ -105,7 +108,7 @@ namespace MySpotify.Controllers
             };
             if (ModelState.IsValid)
             {
-               _userService.CreateUser(userDTO);
+              await _userService.CreateUser(userDTO);
                return RedirectToAction("Login");
             }
 
@@ -124,7 +127,6 @@ namespace MySpotify.Controllers
         // GET: UserController/Details/5
         public ActionResult Details(int id)
         {
-            HttpContext.Session.SetString("path", Request.Path);
             return View();
         }
 
@@ -139,7 +141,6 @@ namespace MySpotify.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
         {
-            HttpContext.Session.SetString("path", Request.Path);
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -161,7 +162,6 @@ namespace MySpotify.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
-            HttpContext.Session.SetString("path", Request.Path);
             try
             {
                 return RedirectToAction(nameof(Index));

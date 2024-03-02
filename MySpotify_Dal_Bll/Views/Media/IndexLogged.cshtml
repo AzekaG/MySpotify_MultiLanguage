@@ -1,7 +1,5 @@
 ﻿@using MySpotify.BLL.DTO
-@using MySpotify.Resourses
 @model MySpotify.Models.MediaUserGenreModel
-
 
 @{
     ViewData["Title"] = "Index";
@@ -16,6 +14,24 @@
 
 </style>
  @section Scripts{
+
+     <script>
+         $(function () {
+
+             const hubConnection = new signalR.HubConnectionBuilder()
+                 .withUrl("/notification")
+                 .build();
+
+             hubConnection.on("displayMessage", function (message) {
+                 alert(message);
+             });
+             hubConnection.start()
+                 .then()
+                 .catch(function (err) { return alert(err)});
+                 });
+     </script>
+
+
     <script>
         btnPlayChangeStatus();
         $(".media_selected").on("click", function (e) {
@@ -86,6 +102,12 @@
         $("#btn_Play").on('click', function () {
             btnPlayChangeStatus();
         });
+
+
+        $("#changeplayerlist").on('click', function () {
+           alert('в данный момент функция недоступна')
+        });
+
         
 
       
@@ -108,22 +130,8 @@
         </div>
 
         <div class="header__section">
-        <div class="header__item headerlogo">
-            @using (Html.BeginForm("ChangeCulture", "Media"))
-            {
-                <select name="lang" class="form-control">
-
-                    <option value="uk">Українська</option>
-                    <option value="ru">Русский</option>
-                    <option value="en">English</option>
-                </select>
-                <input type="submit" name="submit" value="@Resource.ChooseLang" class="btn btn-primary" />
-
-            }
-        </div>
             <div class="header__item headerlogo">
-         
-            <a class="nav-item nav-link" asp-action="Logout" asp-controller="User">@Resource.Logout</a>
+                <a class="nav-item nav-link" asp-action="Logout" asp-controller="User">Выйти</a>
             </div>
         </div>
     </div>
@@ -135,23 +143,23 @@
 
  <div class="headerIndex">
      <div class="menu_side">
-            <h1>@Resource.Playlist</h1>
+         <h1>Playlist</h1>
          <div class="playlist">
-                <h4 class="active"><span></span><i class="bi bi-music-note-beamed"></i>@Resource.Playlist</h4>s
-                <h4 class="noactive"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Create" asp-controller="Media">@Resource.Add_media</a></h4>
+                <h4 class="active"><span></span><i class="bi bi-music-note-beamed"></i>Плэйлист</h4>
+                <h4 class="noactive"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Create" asp-controller="Media">Загрузить песни в плейлист</a></h4>
                 @if(Model.userDTO.Status == Status.admin)
                 {
-                    <h4 class="noactive"><i class="bi bi-gear"></i><a asp-action="Index" asp-controller="Admin">@Resource.Admin_page</a></h4>
+                    <h4 class="noactive"><i class="bi bi-gear"></i><a asp-action="Index" asp-controller="Admin">Админская страничка</a></h4>
 
                 }
                 else
                 {
-                    <h4 class="noactive"><i class="bi bi-gear"></i><a asp-action="MediaSettings" asp-controller="Media">@Resource.Media_management</a></h4>
+                    <h4 class="noactive"><i class="bi bi-gear"></i><a id="changeplayerlist">Изменить песни плэйлиста</a></h4>
                 }
 
          </div>
          <div class="menu_song">    
-                @foreach(var el in Model.mediaDTOs)
+                @foreach(var el in Model.mediaUserDTOs)
                 {
                     
                     <li class="songItem">
@@ -173,20 +181,20 @@
             <ul>
                 
                     <li id="radioPlayer">
-                        @Resource.Radio
+                       Радио
                        </li>
 
             </ul>
                 <div class="search">
                     <i class="bi bi-search"></i>
-                    
+                    <input type="text" placeholder="Найти музыку..." />
                 </div>
                 <div class="user" >
                     
                 </div>
         </nav>
         <div class="content">
-            <h1>@Resource.Punks_hoy__Rap_sucks_</h1>
+            <h1>Punks hoy! Rap sucks!</h1>
             <p id="_artistName"></p>
             <br />
                 <p id="_songName"></p>
@@ -196,14 +204,14 @@
         </div>
             <div class="recomended_Song">
             <div class="h4">
-                <h4>@Resource.Recomended_Song</h4>
+                <h4>Recomended_Song</h4>
                 <div class="btn_s">
                         <i id="left_scroll" class="bi bi-arrow-left-short"></i>
                         <i id="right_scroll"  class="bi bi-arrow-right-short"></i>
                 </div>
             </div>
                 <div class="item">
-                    @foreach (var el in Model.mediaDTOs) //вызвать метод контроллера , rоторый даст коллекцию всех загруженных песен всеми
+                    @foreach (var el in Model.mediaDTOs) //вызвать метод контроллера , еоторый даст коллекцию всех загруженных песен всеми
                     {    
                         <li>
                             <figure>
@@ -212,14 +220,15 @@
                                 <figcaption>@el.Name</figcaption>
                             </figure>
                         </li>
-                       
+                       @*  <p>@el.Name</p>
+                        <p>@el.Artist</p> *@
                     }
 
                 </div>
         </div>
             <div class="popular_songs">
                 <div class="h4">
-                    <h4>@Resource.Your_Songs</h4>
+                    <h4>Your Songs</h4>
                     <div class="btn_s">
                         <i id="left_scrolls" class="bi bi-arrow-left-short"></i>
                         <i id="right_scrolls" class="bi bi-arrow-right-short"></i>
@@ -227,7 +236,7 @@
                 </div>
 
                 <div class="item">
-                    @foreach(var el in Model.mediaDTOs){
+                    @foreach(var el in Model.mediaUserDTOs){
                     <li>
                         <figure>
                             <figcaption>@el.Artist</figcaption>

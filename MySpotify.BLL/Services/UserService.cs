@@ -25,7 +25,7 @@ namespace MySpotify.BLL.Services
             var mapper = new Mapper(config);
             return mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(await Database.Users.GetUserList());
         }
-        public async Task<UserDTO> GetUser(int id)
+        public async Task<UserDTO> GetUser(int id)  //user with salt
         {
             var user = await Database.Users.Get(id);
             return new UserDTO
@@ -37,6 +37,7 @@ namespace MySpotify.BLL.Services
                 LastName = user.LastName,
                 Status = (DTO.Status?)user.Status,
                 Password = user.Password,
+                Salt = user.Salt
             };
         }
 
@@ -52,14 +53,13 @@ namespace MySpotify.BLL.Services
                 LastName = user.LastName,
                 Status = (DTO.Status?)user.Status,
                 Password = user.Password,
+                Salt = user.Salt,
             };
         }
         public async Task CreateUser(UserDTO user)  //вернуться к етому методу , сделать генерацию Соли и пассворда
         {
 
            var pass =  PasswordService.CreatePass(user.Password);
-
-
 
 
 
@@ -90,6 +90,7 @@ namespace MySpotify.BLL.Services
                 LastName = user.LastName,
                 Status = (Status)user.Status,
                 Password = user.Password,
+                Salt = user.Salt,
             };
             Database.Users.Update(us);
             await Database.Save();

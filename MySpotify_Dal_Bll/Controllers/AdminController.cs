@@ -4,13 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using MySpotify.BLL.DTO;
 using MySpotify.BLL.Interfaces;
 using MySpotify.DAL.Entities;
-using MySpotify.Filters;
 using MySpotify.Models.AdminViewModels;
 
 namespace MySpotify.Controllers
 {
-	[Culture]
-	public class AdminController : Controller
+    public class AdminController : Controller
     {
         
         readonly IGenreService _genreService;
@@ -25,7 +23,6 @@ namespace MySpotify.Controllers
         // GET: AdminController
         public async Task<ActionResult> Index()
         {
-            HttpContext.Session.SetString("path", Request.Path);
             IndexModel indexModel = new IndexModel()
             {
                 GenreList = await _genreService.GetGenres()
@@ -36,7 +33,6 @@ namespace MySpotify.Controllers
         // GET: AdminController/Edit/5
         public async Task<IActionResult> EditGenre(int? id)
         {
-            HttpContext.Session.SetString("path", Request.Path);
             if (id == null)
             {
                 return NotFound();
@@ -55,7 +51,6 @@ namespace MySpotify.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditGenre(int id, GenreDTO genre)
         {
-            HttpContext.Session.SetString("path", Request.Path);
             if (id != genre.Id)
             {
                 return NotFound();
@@ -86,7 +81,6 @@ namespace MySpotify.Controllers
 
         public async Task<IActionResult> DeleteGenre(int? id)
         {
-            HttpContext.Session.SetString("path", Request.Path);
             if (id == null)
             {
                 return NotFound();
@@ -104,7 +98,7 @@ namespace MySpotify.Controllers
         public async Task<IActionResult> DeleteGenre(int id, GenreDTO genre)
         {
 
-            HttpContext.Session.SetString("path", Request.Path);
+
             if (id != genre.Id)
             {
                 return NotFound();
@@ -142,7 +136,6 @@ namespace MySpotify.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateGenre(GenreDTO genre)
         {
-            HttpContext.Session.SetString("path", Request.Path);
             if (ModelState.IsValid)
             {
                 await _genreService.CreateGenre(genre);

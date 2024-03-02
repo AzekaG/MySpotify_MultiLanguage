@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Genre\**" />
+    <Content Remove="Views\Genre\**" />
+    <EmbeddedResource Remove="Views\Genre\**" />
+    <None Remove="Views\Genre\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
   </ItemGroup>
 
@@ -15,33 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Genre\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\Media\xK.gif" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resourses\Resource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resourses\Resource.ru.resx">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resourses\Resource.en.resx">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resourses\Resource.resx">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

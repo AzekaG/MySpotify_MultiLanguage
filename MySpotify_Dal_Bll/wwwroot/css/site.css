@@ -223,7 +223,6 @@ color: #f1f1f1;
     color: #fff;
     margin-top: 0px;
     background-size: cover;
-   
 }
 
 .headerIndex {
@@ -239,7 +238,7 @@ color: #f1f1f1;
         position: relative;
         width: 25%;
         height: 80%;
-        background-color:rgb(235, 239, 250);
+        background-color: rgb(235, 239, 250);
         box-shadow: 5px 0px 2px #090f1f;
         color: black;
     }
@@ -802,136 +801,6 @@ color: #f1f1f1;
         margin: auto;
         margin-bottom: 100px;
         margin-top: 0px;
-    }
-    .headerIndex .song_side .recomended_Song .item li img {
-           
-            height: 100px;
-            width: 100px;
-            border-radius: 50%;
-            position: relative;
-            display: block;
-        }
-    .headerIndex .song_side .popular_songs .item li img {
-       
-        height: 100px;
-        width: 100px;
-        border-radius: 50%;
-        position: relative;
-        display: block;
-    }
-        .headerIndex .song_side .recomended_Song h4 {
-            font-size: 26px;
-        }
-
-
-        .headerIndex .song_side .recomended_Song .h4 {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font: 36px;
-        }
-
-            .headerIndex .song_side .recomended_Song .h4 .bi {
-                color: #a4a8b4;
-                cursor: pointer;
-                transition: .3s linear;
-            }
-
-                .headerIndex .song_side .recomended_Song .h4 .bi:hover {
-                    color: #fff;
-                }
-
-    .headerIndex .song_side .popular_songs {
-        width: 200px;
-        height: 200px;
-        margin: auto;
-        margin-bottom: 0px;
-        margin-top: 0px;
-    }
-
-
-
-
-        .headerIndex .song_side .popular_songs .h4 {
-            display: flex;
-            align-items: center;
-           
-        }
-
-        .headerIndex .song_side .popular_songs h4 {
-            font-size: 24px;
-        }
-
-        .headerIndex .song_side .popular_songs .h4 .bi {
-            color: #a4a8b4;
-            cursor: pointer;
-            transition: .3s linear;
-        }
-
-        .headerIndex .song_side .popular_songs .h4 .bi:hover {
-                color: #fff;
-         }
-
-        .headerIndex .song_side .popular_songs .item {
-            width: 100%;
-            height: 150px;
-            display: flex;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-behavior: smooth; /*плавная прокрутка*/
-            text-align: center;
-            align-items: center;
-        }
-
-        .headerIndex .song_side .recomended_Song .item {
-            width: 100%;
-            min-height: 150px;
-            display: flex;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-behavior: smooth; /*плавная прокрутка*/
-           
-
-        }
-  
-            .headerIndex .song_side .popular_songs .item::-webkit-scrollbar {
-                display: none;
-            }
-
-    .headerIndex .song_side .popular_songs .item li {
-                list-style-type: none;
-               
-                min-width: 100px;
-                max-height: 150px;
-                background-color: transparent;
-                margin-right: 20px;
-                cursor: pointer;
-               
-    }
-    .headerIndex .song_side .recomended_Song .item li {
-        margin-top: 0px;
-        list-style-type: none;
-        min-width: 80px;
-        height: 80px;
-        margin-right: 20px;
-        cursor: pointer;
-    }
-               
-       
-figure {
-    display:block;
-}
-figure + figcaption {
-    width: 120px;
-
-    text-align: center;
-}
-
-
-
-
-
-    .headerIndex .song_side .recomended_Song {
         width: 90%;
         height: auto;
         margin: auto;
@@ -940,47 +809,177 @@ figure + figcaption {
 
 
 
+    .headerIndex .song_side .popular_songs {
+        width: 200px;
+        height: 200px;
+        margin: auto;
+        margin-bottom: 100px;
+        margin-top: 0px;
+        width: 90%;
+        height: auto;
+        margin: auto;
+        margin-bottom: 0px;
+    }
 
-        .headerIndex .song_side .recomended_Song .h4 {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+    .headerIndex .song_side .recomended_Song .item li img {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        position: relative;
+        display: block;
+    }
+
+    .headerIndex .song_side .popular_songs .item li img {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        position: relative;
+        display: block;
+    }
+
+    .headerIndex .song_side .recomended_Song h4 {
+        font-size: 26px;
+    }
+
+
+    .headerIndex .song_side .recomended_Song .h4 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font: 36px;
+    }
+
+        .headerIndex .song_side .recomended_Song .h4 .bi {
+            color: #a4a8b4;
+            cursor: pointer;
+            transition: .3s linear;
         }
 
-            .headerIndex .song_side .recomended_Song .h4 .bi {
-                color: #a4a8b4;
-                cursor: pointer;
-                transition: .3s linear;
+            .headerIndex .song_side .recomended_Song .h4 .bi:hover {
+                color: #fff;
             }
 
-                .headerIndex .song_side .recomended_Song .h4 .bi:hover {
-                    color: #fff;
-                }
 
-        .headerIndex .song_side .recomended_Song .item {
-            width: 100%;
-            height: 100px;
-            display: flex;
-            overflow-x: auto;
-            scroll-behavior: smooth; /*плавная прокрутка*/
-            text-align: center;
-           
+
+
+
+    .headerIndex .song_side .popular_songs .h4 {
+        display: flex;
+        align-items: center;
+    }
+
+    .headerIndex .song_side .popular_songs h4 {
+        font-size: 24px;
+    }
+
+    .headerIndex .song_side .popular_songs .h4 .bi {
+        color: #a4a8b4;
+        cursor: pointer;
+        transition: .3s linear;
+    }
+
+        .headerIndex .song_side .popular_songs .h4 .bi:hover {
+            color: #fff;
         }
 
-            .headerIndex .song_side .recomended_Song .item::-webkit-scrollbar {
-                display: none;
-            }
+    .headerIndex .song_side .popular_songs .item {
+        width: 100%;
+        height: 150px;
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-behavior: smooth; /*плавная прокрутка*/
+        text-align: center;
+        align-items: center;
+    }
 
-       
+    .headerIndex .song_side .recomended_Song .item {
+        width: 100%;
+        min-height: 150px;
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-behavior: smooth; /*плавная прокрутка*/
+    }
 
-                .headerIndex .song_side .recomended_Song .item li img {
-                    width: auto;
-                    max-height: 100px;
-                    width: 100px;
-                    border-radius: 50%;
-                    position: relative;
-                    display: block;
-                }
+    .headerIndex .song_side .popular_songs .item::-webkit-scrollbar {
+        display: none;
+    }
+
+    .headerIndex .song_side .popular_songs .item li {
+        list-style-type: none;
+        min-width: 100px;
+        max-height: 150px;
+        background-color: transparent;
+        margin-right: 20px;
+        cursor: pointer;
+    }
+
+    .headerIndex .song_side .recomended_Song .item li {
+        margin-top: 0px;
+        list-style-type: none;
+        min-width: 80px;
+        height: 80px;
+        margin-right: 20px;
+        cursor: pointer;
+    }
+
+
+figure {
+    display: block;
+}
+
+    figure + figcaption {
+        width: 120px;
+        text-align: center;
+    }
+
+
+
+
+
+
+
+
+.headerIndex .song_side .recomended_Song .h4 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+    .headerIndex .song_side .recomended_Song .h4 .bi {
+        color: #a4a8b4;
+        cursor: pointer;
+        transition: .3s linear;
+    }
+
+        .headerIndex .song_side .recomended_Song .h4 .bi:hover {
+            color: #fff;
+        }
+
+.headerIndex .song_side .recomended_Song .item {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth; /*плавная прокрутка*/
+    text-align: center;
+}
+
+    .headerIndex .song_side .recomended_Song .item::-webkit-scrollbar {
+        display: none;
+    }
+
+
+
+    .headerIndex .song_side .recomended_Song .item li img {
+        width: auto;
+        max-height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        position: relative;
+        display: block;
+    }
 
 
 

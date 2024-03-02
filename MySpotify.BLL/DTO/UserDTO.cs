@@ -34,6 +34,8 @@ namespace MySpotify.BLL.DTO
 
         [Required(ErrorMessage = "Поле должно быть заполнено.")]
         public Status? Status { get; set; } 
+        
+        public string? Salt { get; set; }
 
        
     }

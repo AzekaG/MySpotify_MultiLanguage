@@ -1,5 +1,5 @@
 ﻿@model MySpotify.Models.AdminViewModels.AdminAccIndexModel
-@using MySpotify.Resourses;
+
 
 
 
@@ -19,7 +19,7 @@
                     close: function () { $('#dialogContent').remove() },
                     modal: true,
                     buttons: {
-                        '@Resource.Save': function () {
+                        'Сохранить': function () {
                             $.ajax({
                                 url: "@Url.Action("EditUser", "AdminAcc")",
                                 type: "POST",
@@ -50,7 +50,7 @@
                     close: function () { $('dialogContent').remove() },
                     modal: true,
                     buttons: {
-                        '@Resource.Delete': function () {
+                        'Удалить': function () {
                             $.ajax({
                                 url: "@Url.Action("DeleteUser", "AdminAcc")",
                                 type: "POST",
@@ -63,7 +63,7 @@
                             });
 
                         },
-                        '@Resource.Cancel': function () {
+                        'Отмена': function () {
                             alert("remove");
 
                             $(this).dialog("close");
@@ -147,25 +147,9 @@
 
     </div>
 
-        <div class="header__section">
-            <div class="header__item headerlogo">
-                @using (Html.BeginForm("ChangeCulture", "Media"))
-                {
-                    <select name="lang" class="form-control">
-
-                        <option value="uk">Українська</option>
-                        <option value="ru">Русский</option>
-                        <option value="en">English</option>
-                    </select>
-                    <input type="submit" name="submit" value="@Resource.ChooseLang" class="btn btn-primary" />
-
-                }
-            </div>
+    <div class="header__section">
         <div class="header__item headerlogo">
-               
-
-
-            <a class="nav-item nav-link active" asp-action="Logout" asp-controller="User"></a>
+            <a class="nav-item nav-link active" asp-action="Logout" asp-controller="User">Выйти</a>
         </div>
 
     </div>
@@ -176,10 +160,10 @@
     <div class="menu_side">
         <h1>Playlist</h1>
         <div class="playlist">
-            <h4 class="noactive" id="GenreManagment"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Index" asp-controller="Admin" id="btnAddManagment">@Resource.Genre_management</a></h4>
-            <h4 class="noactive" id="AddManagment"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Index" asp-controller="AdminMedia" class="btnAddManagment">@Resource.Media_management</a></h4>
-            <h4 class="active" id="AccManagment"><span></span><i class="bi bi-plus-circle "></i><a asp-action="Index" asp-controller="AdminAcc" class="btnAccManagment">@Resource.Account_management</a></h4>
-                <h4 class="active"><span></span><i class="bi bi-house"></i><a asp-action="Index" asp-controller="Media">@Resource.Home</a></h4>
+                <h4 class="noactive" id="GenreManagment"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Index" asp-controller="Admin" id="btnAddManagment">Управление жанрами</a></h4>
+            <h4 class="noactive" id="AddManagment"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Index" asp-controller="AdminMedia" class="btnAddManagment">Управление песнями </a></h4>
+            <h4 class="active" id="AccManagment"><span></span><i class="bi bi-plus-circle "></i><a asp-action="Index" asp-controller="AdminAcc" class="btnAccManagment">Управление аккаунтами </a></h4>
+            <h4 class="active"><span></span><i class="bi bi-house"></i><a asp-action="Index" asp-controller="Media">Домой</a></h4>
 
         </div>
     </div>
@@ -197,18 +181,17 @@
                                       <span> @(el.FirstName)  @(el.LastName) </span>
                             </div>
 
-                            <button asp-action='Edit' asp-route-id='@el.Id' class='btnEdit bubbly-button ' data-dialog-title='@Resource.Edit' genreid='@el.Id'>
-                                <span class='text'>@Resource.Edit</span>
+                            <button asp-action='Edit' asp-route-id='@el.Id' class='btnEdit bubbly-button ' data-dialog-title='Редактирование' genreid='@el.Id'>
+                            <span class='text'>Изменить</span>
                         </button>
-                            <button asp-action='Delete' asp-route-id='@el.Id' class='btnDelete bubbly-button ' data-dialog-title='@Resource.Delete' genreid='@el.Id'>
+                            <button asp-action='Delete' asp-route-id='@el.Id' class='btnDelete bubbly-button ' data-dialog-title='Удаление' genreid='@el.Id'>
                                 
-                                <span class='text'>@Resource.Delete</span>
-                            </button>
+                            <span class='text'>Удалить</span></button>
                          </li>
 
             }
                 </ul>
-                <button class='btnCreate bubbly-button' asp-action='Create' data-dialog-title='@Resource.Create'><span class='text'>@Resource.Create</span></button>
+                <button class='btnCreate bubbly-button' asp-action='Create' data-dialog-title='Создание'><span class='text'>Создать</span></button>
             </div>
 
     </div>
