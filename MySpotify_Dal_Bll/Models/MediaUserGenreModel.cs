@@ -8,5 +8,12 @@ namespace MySpotify.Models
         public UserDTO? userDTO { get; set; }
         public MediaPaginationModel? mediaPaginationModel { get; set; }
 
+        public SortViewModel sortViewModel { get; set; } = new SortViewModel(SortState.NameAsc);
+
+        public FilterViewModel filterViewModel { get; set; }
     }
+
+
+
+ 
 }

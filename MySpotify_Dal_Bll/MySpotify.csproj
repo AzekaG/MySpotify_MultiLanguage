@@ -7,15 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Genre\**" />
+    <Content Remove="Views\Genre\**" />
+    <EmbeddedResource Remove="Views\Genre\**" />
+    <None Remove="Views\Genre\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MySpotify.BLL\MySpotify.BLL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Genre\" />
   </ItemGroup>
 
   <ItemGroup>

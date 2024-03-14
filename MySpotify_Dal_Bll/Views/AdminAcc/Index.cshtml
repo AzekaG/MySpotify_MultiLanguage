@@ -5,7 +5,7 @@
 
 @section Scripts {
 <script>
-    
+
         $(".btnEdit").on("click", function (e) {
             e.preventDefault();
 
@@ -19,7 +19,7 @@
                     close: function () { $('#dialogContent').remove() },
                     modal: true,
                     buttons: {
-                        '@Resource.Save': function () {
+                        'Сохранить': function () {
                             $.ajax({
                                 url: "@Url.Action("EditUser", "AdminAcc")",
                                 type: "POST",
@@ -28,6 +28,10 @@
                                 success: function (result) {
                                     location.reload();
                                     $('#dialogContent').remove();
+                                },
+                                error: function(x,y,x)
+                                {
+                                    console.log(x, y, z);s
                                 }
                             });
                         }
@@ -50,7 +54,7 @@
                     close: function () { $('dialogContent').remove() },
                     modal: true,
                     buttons: {
-                        '@Resource.Delete': function () {
+                        'Удалить': function () {
                             $.ajax({
                                 url: "@Url.Action("DeleteUser", "AdminAcc")",
                                 type: "POST",
@@ -63,7 +67,7 @@
                             });
 
                         },
-                        '@Resource.Cancel': function () {
+                        'Отмена': function () {
                             alert("remove");
 
                             $(this).dialog("close");

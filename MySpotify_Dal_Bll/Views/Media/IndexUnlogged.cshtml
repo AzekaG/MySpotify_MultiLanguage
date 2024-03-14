@@ -156,13 +156,16 @@
             <div class="recomended_Song">
                 <div class="h4">
                     <h4>@Resource.Recomended_Song</h4>
-                    <a asp-action="Index" asp-route-sortState="@ViewBag.NameSort">По имени</a>
-                    <a asp-action="Index" asp-route-sortState="@ViewBag.ArtistSort">По артисту</a>
+                   
                     <div class="btn_s">
                         <i id="left_scroll" class="bi bi-arrow-left-short"></i>
                         <i id="right_scroll" class="bi bi-arrow-right-short"></i>
                     </div>
                 </div>
+                <form method="get">
+                <select name="genre" asp-items="Model.filterViewModel.Genres"></select>
+                <input type="submit" value="Filter" />
+                </form>
                 <div class="item">
                     @foreach (var el in Model.mediaDTOs){
                         <li>

@@ -22,10 +22,10 @@ namespace MySpotify.Controllers
             _mediaService = mediaService;
             _environment = environment;
         }
-
+         
 
         // GET: MediaControlelr
-        public async Task<IActionResult> Index(SortState sortState = SortState.NameAsc , int page = 1)
+        public async Task<IActionResult> Index(SortState sortOrder = SortState.NameAsc , int page = 1 , int genre = 0)
         {
             IEnumerable<MediaDTO>? medusDTO; //коллекция медиа 
             UserDTO? user = null;  //сессионый юзер
@@ -38,23 +38,44 @@ namespace MySpotify.Controllers
             int.TryParse(HttpContext.Session.GetString("Id"), out idUser);
 
 
-            ViewBag.NameSort = sortState == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
-            ViewBag.ArtistSort = sortState == SortState.ArtistAsc ? SortState.ArtistDesc : SortState.ArtistAsc;
+            //ViewBag.NameSort = sortState == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            //ViewBag.ArtistSort = sortState == SortState.ArtistAsc ? SortState.ArtistDesc : SortState.ArtistAsc;
 
-            
-            if (idUser > 0)
+
+            if (genre > 0)
             {
-               user = await _userService.GetUser(idUser);
-               medusDTO = (await _mediaService.GetMediaList()).Where(x => x.UserId == user.Id);
-               
+                var gnr = await _genreService.Get(genre);
+                if (idUser > 0)
+                {
+                    user = await _userService.GetUser(idUser);
+                    medusDTO = (await _mediaService.GetMediaList()).Where(x => x.UserId == user.Id).Where(a => a.Genre == gnr.Name);
+
+                }
+                else
+                {
+                    medusDTO = (await _mediaService.GetMediaList()).Where(x => x.Genre == gnr.Name);
+                }
             }
             else
             {
-                medusDTO = await _mediaService.GetMediaList();
+                if (idUser > 0)
+                {
+                    user = await _userService.GetUser(idUser);
+                    medusDTO = (await _mediaService.GetMediaList()).Where(x => x.UserId == user.Id);
+
+                }
+                else
+                {
+                    medusDTO = (await _mediaService.GetMediaList());
+                }
             }
 
+
+
+
+
             pageCount = medusDTO.Count();
-            medusDTO = sortState switch
+            medusDTO = sortOrder switch
             {
                 SortState.NameDesc => medusDTO.OrderByDescending(x => x.Name).Skip((page-1)*pageSize).Take(pageSize),
                 SortState.NameAsc => medusDTO.OrderBy(x => x.Name).Skip((page - 1) * pageSize).Take(pageSize),
@@ -69,7 +90,9 @@ namespace MySpotify.Controllers
             {
                 mediaDTOs = medusDTO,
                 userDTO = user,
-                mediaPaginationModel = new MediaPaginationModel(pageCount, page, pageSize)
+                mediaPaginationModel = new MediaPaginationModel(pageCount, page, pageSize),
+                sortViewModel = new SortViewModel(sortOrder),
+                filterViewModel = new FilterViewModel((await _genreService.GetGenres()).ToList(), genre)
             };
 
             HttpContext.Session.SetString("path", Request.Path);

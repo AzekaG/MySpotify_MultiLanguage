@@ -61,8 +61,6 @@ namespace MySpotify.BLL.Services
 
 
 
-
-
             User us = new User
             {
                 Active = false,

@@ -42,7 +42,8 @@ namespace MySpotify.BLL.Services
         public async Task<IEnumerable<MediaDTO>> GetMediaList()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Media , MediaDTO>()
-                                 .ForMember("UserId" , opt => opt.MapFrom(c=>c.User.id)));
+                                 .ForMember("UserId" , opt => opt.MapFrom(c=>c.User.id))
+                                 .ForMember("Genre" , opt=>opt.MapFrom(x=>x.Genre.Name)));
             var mapper = new Mapper(config);
             return mapper.Map<IEnumerable<Media>, IEnumerable<MediaDTO>>(await Database.Medias.GetMediaList());
 

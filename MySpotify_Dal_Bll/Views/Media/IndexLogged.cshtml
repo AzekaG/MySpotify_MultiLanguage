@@ -137,7 +137,7 @@
      <div class="menu_side">
             <h1>@Resource.Playlist</h1>
          <div class="playlist">
-                <h4 class="active"><span></span><i class="bi bi-music-note-beamed"></i>@Resource.Playlist</h4>s
+                <h4 class="active"><span></span><i class="bi bi-music-note-beamed"></i>@Resource.Playlist</h4>
                 <h4 class="noactive"><span></span><i class="bi bi-plus-circle"></i><a asp-action="Create" asp-controller="Media">@Resource.Add_media</a></h4>
                 @if(Model.userDTO.Status == Status.admin)
                 {
@@ -197,13 +197,18 @@
             <div class="recomended_Song">
             <div class="h4">
                 <h4>@Resource.Recomended_Song</h4>
+                <div>
+                        <sort-header action="Index" up="@Model.sortViewModel.Up" current="@Model.sortViewModel.Current" property="@Model.sortViewModel.NameSort">Название песни</sort-header>
+                        <sort-header action="Index" up="@Model.sortViewModel.Up" current="@Model.sortViewModel.Current" property="@Model.sortViewModel.ArtistSort">Исполнитель</sort-header>
+
+                </div>
                 <div class="btn_s">
-                        <i id="left_scroll" class="bi bi-arrow-left-short"></i>
+                        <i id="left_scroll" class="bi bi-arrow-left-short"></i> 
                         <i id="right_scroll"  class="bi bi-arrow-right-short"></i>
                 </div>
             </div>
                 <div class="item">
-                    @foreach (var el in Model.mediaDTOs) //вызвать метод контроллера , rоторый даст коллекцию всех загруженных песен всеми
+                    @foreach (var el in Model.mediaDTOs) 
                     {    
                         <li>
                             <figure>
@@ -243,8 +248,11 @@
                 </div>
 
             </div>
+            <page-link page-model="Model.mediaPaginationModel" page-action="Index"
+                       page-url-sortorder="@(Model.sortViewModel.Current)"></page-link>
 
     </div>
+
 
 
         <div class="master_play" style="margin-bottom:100px">
